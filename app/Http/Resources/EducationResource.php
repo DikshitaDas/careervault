@@ -19,6 +19,8 @@ class EducationResource extends JsonResource
             'field_of_study' => $this->field_of_study,
             'school' => $this->school,
             'graduation_year' => $this->graduation_year,
+            'grading_type' => $this->grading_type,
+            'grade' => $this->grade,
             'order' => $this->order,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
