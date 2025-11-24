@@ -852,63 +852,117 @@ export const ResumeBuilder = () => {
                 </div>
             )}
 
-            {/* Print Styles */}
+            {/* Print / compact styles */}
             <style>
                 {`
-                /* Compact A4 print layout */
+                /* Compact A4 layout for preview + print */
                 #resume-preview {
                     width: 210mm !important;
                     min-height: 297mm !important;
                     margin: 0 auto !important;
-                    padding: 8mm 10mm !important;
-                    font-size: 13px !important;
-                    line-height: 1.4 !important;
+                    padding: 12mm 15mm !important;   /* ⬅ clean A4 margins */
+                    font-size: 11.5px !important;
+                    line-height: 1.3 !important;
                     background: white !important;
                     box-shadow: none !important;
                 }
 
+                /* Global spacing inside preview */
                 #resume-preview * {
-                    margin-top: 2px !important;
-                    margin-bottom: 2px !important;
+                    margin-top: 1px !important;
+                    margin-bottom: 1px !important;
                 }
 
-                #resume-preview h1,
-                #resume-preview h2,
+                /* Headings more compact */
+                #resume-preview h1 {
+                    font-size: 20px !important;   /* override 26px Tailwind */
+                    margin: 2px 0 !important;
+                    line-height: 1.15 !important;
+                }
+
+                #resume-preview h2 {
+                    font-size: 13px !important;
+                    margin: 2px 0 !important;
+                    line-height: 1.2 !important;
+                }
+
                 #resume-preview h3,
                 #resume-preview h4 {
-                    margin: 4px 0 !important;
+                    font-size: 12px !important;
+                    margin: 2px 0 !important;
                     line-height: 1.2 !important;
                 }
 
                 #resume-preview p,
-                #resume-preview li {
-                    margin: 2px 0 !important;
+                #resume-preview li,
+                #resume-preview span,
+                #resume-preview div {
+                    font-size: 11.5px !important;
                 }
 
+                #resume-preview p,
+                #resume-preview li {
+                    margin: 1px 0 !important;
+                }
+
+                /* Ensure colors print correctly */
                 @media print {
                     * {
                         -webkit-print-color-adjust: exact !important;
+                        print-color-adjust: exact !important;
                         color-adjust: exact !important;
                     }
                 }
 
+                /* Disable clickable links in print/preview */
                 #resume-preview a,
                 #resume-preview [role="link"] {
                     pointer-events: none !important;
+                    text-decoration: none !important;
                 }
 
+                /* Rich text lists */
                 .resume-richtext ul {
                     list-style-type: disc;
-                    margin-left: 1.25rem;
-                    padding-left: 0.25rem;
+                    margin-left: 1.1rem;
+                    padding-left: 0.1rem;
                 }
+
                 .resume-richtext ol {
                     list-style-type: decimal;
-                    margin-left: 1.25rem;
-                    padding-left: 0.25rem;
+                    margin-left: 1.1rem;
+                    padding-left: 0.1rem;
                 }
+
                 .resume-richtext li {
-                    margin-bottom: 0.15rem;
+                    margin-bottom: 0.1rem;
+                }
+
+                /* Actual resume page wrapper (used for PDF capture too) */
+                .resume-page {
+                    width: 210mm;
+                    min-height: auto;
+                    margin: 0 auto;
+                    padding: 12mm 15mm !important;   /* ⬅ same inner page margins */
+                    background: white;
+                }
+
+                /* Print-only layout */
+                @media print {
+                    body * {
+                        visibility: hidden;
+                    }
+                    .resume-page, .resume-page * {
+                        visibility: visible;
+                    }
+                    .resume-page {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 100% !important;
+                        margin: 0 !important;
+                        padding: 12mm 15mm !important;  /* ⬅ print margins */
+                    }
                 }
             `}
             </style>
