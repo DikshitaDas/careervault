@@ -134,19 +134,17 @@ Ensure API base URL in frontend `.env` or config points to your backend.
 
 ---
 
-## 🖼️ Screenshots (Optional)
-
-Place images inside `/screenshots` folder.
+## 🖼️ Screenshots
 
 ```md
 ### Dashboard
-![Dashboard](./screenshots/dashboard.png)
+![Dashboard](https://github.com/DikshitaDas/careervault/blob/main/screenshots/dashboard.png)
 
 ### Resume Builder
-![Resume Builder](./screenshots/resume-builder.png)
+![Resume Builder](https://github.com/DikshitaDas/careervault/blob/main/screenshots/resume-builder.png)
 
 ### Preview
-![Preview](./screenshots/preview.png)
+![Preview](https://github.com/DikshitaDas/careervault/blob/main/screenshots/preview.png)
 ```
 
 ---
