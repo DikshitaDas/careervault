@@ -10,10 +10,12 @@ return new class extends Migration {
         Schema::create('educations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('resume_id')->constrained('resumes')->onDelete('cascade');
-            $table->string('degree');
-            $table->string('field_of_study');
-            $table->string('school');
-            $table->year('graduation_year');
+            $table->string('degree')->nullable();
+            $table->string('field_of_study')->nullable();
+            $table->string('school')->nullable();
+            $table->year('graduation_year')->nullable();
+            $table->enum('grading_type', ['percentage', 'cgpa'])->nullable()->after('graduation_year');
+            $table->decimal('grade', 5, 2)->nullable()->after('grading_type');
             $table->integer('order')->default(0);
             $table->timestamps();
         });
