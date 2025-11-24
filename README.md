@@ -136,16 +136,14 @@ Ensure API base URL in frontend `.env` or config points to your backend.
 
 ## 🖼️ Screenshots
 
-```md
 ### Dashboard
-![Dashboard](https://github.com/DikshitaDas/careervault/main/screenshots/dashboard.png)
+![Dashboard](https://github.com/DikshitaDas/careervault/blob/main/screenshots/dashboard.png?raw=true)
 
 ### Resume Builder
-![Resume Builder](https://github.com/DikshitaDas/careervault/main/screenshots/resume-builder.png)
+![Resume Builder](https://github.com/DikshitaDas/careervault/main/screenshots/resume-builder.png?raw=true)
 
 ### Preview
-![Preview](https://github.com/DikshitaDas/careervault/main/screenshots/preview.png)
-```
+![Preview](https://github.com/DikshitaDas/careervault/main/screenshots/preview.png?raw=true)
 
 ---
 
