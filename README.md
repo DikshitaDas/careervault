@@ -142,7 +142,10 @@ Ensure API base URL in frontend `.env` or config points to your backend.
 ### Resume Builder
 <img src="https://github.com/DikshitaDas/careervault/blob/main/screenshots/resume-builder.png?raw=true" width="800" height="450" />
 
-### Preview
+### Classic Resume Preview
+<img src="https://github.com/DikshitaDas/careervault/blob/main/screenshots/classic.png?raw=true" width="800" height="450" />
+
+### Modern Resume Preview
 <img src="https://github.com/DikshitaDas/careervault/blob/main/screenshots/preview.png?raw=true" width="800" height="450" />
 
 ---
