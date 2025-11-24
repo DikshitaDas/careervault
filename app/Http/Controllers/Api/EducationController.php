@@ -33,6 +33,8 @@ class EducationController extends Controller
             'field_of_study' => 'nullable|string|max:255',
             'school' => 'required|string|max:255',
             'graduation_year' => 'nullable|integer|min:1900|max:2100',
+            'grading_type' => 'nullable|string|max:100',
+            'grade' => 'nullable|string|max:50',
         ]);
 
         if ($validator->fails()) {
@@ -74,6 +76,8 @@ class EducationController extends Controller
             'field_of_study' => 'nullable|string|max:255',
             'school' => 'required|string|max:255',
             'graduation_year' => 'nullable|integer|min:1900|max:2100',
+            'grading_type' => 'nullable|string|max:100',
+            'grade' => 'nullable|string|max:50',
         ]);
 
         if ($validator->fails()) {
