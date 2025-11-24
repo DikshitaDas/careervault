@@ -1,3 +1,4 @@
+# Existing rules
 * text=auto eol=lf
 
 *.blade.php diff=html
@@ -9,3 +10,16 @@
 /.github export-ignore
 CHANGELOG.md export-ignore
 .styleci.yml export-ignore
+
+# Ignore vendor and node_modules for language calculation
+vendor/ linguist-vendored
+node_modules/ linguist-vendored
+public/ linguist-vendored
+
+# Force PHP detection
+*.php linguist-language=PHP
+*.blade.php linguist-language=Blade
+
+# (Optional) Disable Hack mistaken detection
+*.hh linguist-vendored
+*.hack linguist-vendored
