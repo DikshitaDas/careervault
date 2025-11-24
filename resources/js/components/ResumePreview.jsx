@@ -54,7 +54,7 @@ export const ResumePreview = ({
 
 // Classic template (current layout, themed)
 const ClassicTemplate = ({ resume, palette }) => (
-    <div className="bg-white px-5 py-4 text-gray-800 font-serif text-[13px] leading-snug max-w-[210mm] mx-auto">
+    <div className="resume-page bg-white px-5 py-4 text-gray-800 font-serif text-[13px] leading-snug max-w-[210mm] mx-auto">
         {/* Header */}
         <div className="text-center pb-2 mb-3">
             <h1
@@ -197,21 +197,40 @@ const ClassicTemplate = ({ resume, palette }) => (
         {/* Education */}
         {resume.educations?.length > 0 && (
             <Section title="Education" palette={palette}>
-                {resume.educations.map((edu) => (
-                    <div key={edu.id} className="mb-1">
-                        <div className="flex justify-between text-[12.5px] font-semibold">
-                            <span>
-                                {edu.school} -{" "}
-                                <span className="text-gray-500">
-                                    {edu.degree} in {edu.field_of_study}
+                {resume.educations.map((edu) => {
+                    const hasGrade =
+                        edu.grading_type &&
+                        edu.grade !== null &&
+                        edu.grade !== "" &&
+                        edu.grade !== undefined;
+
+                    const gradeText = hasGrade
+                        ? edu.grading_type === "percentage"
+                            ? `${formatGrade(edu.grade)}%`
+                            : `${formatGrade(edu.grade)} CGPA`
+                        : null;
+
+                    return (
+                        <div key={edu.id} className="mb-1">
+                            <div className="flex justify-between text-[12.5px] font-semibold">
+                                <span>
+                                    {edu.school} -{" "}
+                                    <span className="text-gray-500">
+                                        {edu.degree}
+                                        {edu.field_of_study &&
+                                        edu.field_of_study.trim() !== ""
+                                            ? ` in ${edu.field_of_study}`
+                                            : ""}
+                                        {gradeText && ` — ${gradeText}`}
+                                    </span>
                                 </span>
-                            </span>
-                            <span className="text-gray-600">
-                                {edu.graduation_year}
-                            </span>
+                                <span className="text-gray-600">
+                                    {edu.graduation_year}
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </Section>
         )}
 
@@ -248,7 +267,7 @@ const ClassicTemplate = ({ resume, palette }) => (
 
 // Modern template (left header band with accent)
 const ModernTemplate = ({ resume, palette }) => (
-    <div className="bg-white text-gray-800 font-sans text-[13px] leading-snug max-w-[210mm] mx-auto">
+    <div className="resume-page bg-white text-gray-800 font-sans text-[13px] leading-snug max-w-[210mm] mx-auto">
         {/* Header */}
         <div className={`w-full ${palette.accentBg} text-white px-6 py-4 mb-4`}>
             <h1 className="text-[26px] font-extrabold tracking-wide">
@@ -392,21 +411,40 @@ const ModernTemplate = ({ resume, palette }) => (
             {/* Education */}
             {resume.educations?.length > 0 && (
                 <ModernSection title="Education" palette={palette}>
-                    {resume.educations.map((edu) => (
-                        <div key={edu.id} className="mb-2">
-                            <div className="flex justify-between text-[12.5px] font-semibold">
-                                <span>
-                                    {edu.school}{" "}
-                                    <span className="text-gray-500">
-                                        — {edu.degree} in {edu.field_of_study}
+                    {resume.educations.map((edu) => {
+                        const hasGrade =
+                            edu.grading_type &&
+                            edu.grade !== null &&
+                            edu.grade !== "" &&
+                            edu.grade !== undefined;
+
+                        const gradeText = hasGrade
+                            ? edu.grading_type === "percentage"
+                                ? `${formatGrade(edu.grade)}%`
+                                : `${formatGrade(edu.grade)} CGPA`
+                            : null;
+
+                        return (
+                            <div key={edu.id} className="mb-2">
+                                <div className="flex justify-between text-[12.5px] font-semibold">
+                                    <span>
+                                        {edu.school}{" "}
+                                        <span className="text-gray-500">
+                                            {edu.degree}
+                                            {edu.field_of_study &&
+                                            edu.field_of_study.trim() !== ""
+                                                ? ` in ${edu.field_of_study}`
+                                                : ""}
+                                            {gradeText && ` — ${gradeText}`}
+                                        </span>
                                     </span>
-                                </span>
-                                <span className="text-gray-600">
-                                    {edu.graduation_year}
-                                </span>
+                                    <span className="text-gray-600">
+                                        {edu.graduation_year}
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </ModernSection>
             )}
 
@@ -475,6 +513,20 @@ function formatDate(dateString) {
         month: "short",
         year: "numeric",
     });
+}
+function formatGrade(value) {
+    if (value === null || value === "" || value === undefined) return "";
+
+    // Convert to number first so JS trims .00 etc.
+    const num = Number(value);
+
+    // If integer, show as integer (75 instead of 75.0)
+    if (Number.isInteger(num)) {
+        return num.toString();
+    }
+
+    // Else show minimal decimal (8.5 instead of 8.50)
+    return num.toString();
 }
 
 export default ResumePreview;
