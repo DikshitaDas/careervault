@@ -1,0 +1,35 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+
+/* Compact React Quill Editor Styling */
+.quill-compact .ql-toolbar {
+  border: none !important;
+  background-color: #f9fafb;
+  padding: 4px 8px !important;
+}
+
+.quill-compact .ql-container {
+  border: none !important;
+  font-size: 0.875rem !important; /* text-sm */
+  min-height: 100px;
+}
+
+.quill-compact .ql-editor {
+  padding: 6px 8px !important;
+  line-height: 1.4;
+}
+
+.quill-compact .ql-toolbar button svg {
+  height: 14px !important;
+  width: 14px !important;
+}
