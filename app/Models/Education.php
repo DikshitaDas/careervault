@@ -13,6 +13,8 @@ class Education extends Model
         'field_of_study',
         'school',
         'graduation_year',
+        'grading_type',
+        'grade',
         'order'
     ];
     protected $table = 'educations';
