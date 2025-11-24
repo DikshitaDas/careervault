@@ -14,6 +14,8 @@ export const EducationForm = ({
         field_of_study: "",
         school: "",
         graduation_year: "",
+        grading_type: "",
+        grade: "",
     });
 
     const [editMode, setEditMode] = useState(false);
@@ -32,31 +34,57 @@ export const EducationForm = ({
             field_of_study: edu.field_of_study || "",
             school: edu.school || "",
             graduation_year: edu.graduation_year || "",
+            grading_type: edu.grading_type || "",
+            grade:
+                edu.grade === null || edu.grade === undefined
+                    ? ""
+                    : String(edu.grade),
         });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // FIX:
+        // Prevent wiping values during update when user leaves blank
+        if (editMode) {
+            const old = educations.find((e) => e.id === editId);
+
+            if (formData.grading_type === "") {
+                formData.grading_type = old?.grading_type || null;
+            }
+
+            if (formData.grade === "") {
+                formData.grade = old?.grade || null;
+            }
+        }
+
+        const payload = {
+            ...formData,
+            grading_type: formData.grading_type || null,
+            grade:
+                formData.grade === "" || formData.grade === null
+                    ? null
+                    : formData.grade,
+            resume_id: resumeId,
+        };
+
         if (editMode && editId) {
-            onUpdate(editId, {
-                ...formData,
-                resume_id: resumeId,
-            });
+            onUpdate(editId, payload);
             setEditMode(false);
             setEditId(null);
         } else {
-            onAdd({
-                ...formData,
-                resume_id: resumeId,
-            });
+            onAdd(payload);
         }
 
-        // Reset form fields
+        // Reset form after submit
         setFormData({
             degree: "",
             field_of_study: "",
             school: "",
             graduation_year: "",
+            grading_type: "",
+            grade: "",
         });
     };
 
@@ -83,11 +111,12 @@ export const EducationForm = ({
                             name="degree"
                             value={formData.degree}
                             onChange={handleChange}
-                            placeholder="Bachelor of Science"
+                            placeholder="Bachelor of Technology"
                             required
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
                         />
                     </div>
+
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             Field of Study
@@ -97,7 +126,7 @@ export const EducationForm = ({
                             name="field_of_study"
                             value={formData.field_of_study}
                             onChange={handleChange}
-                            placeholder="Computer Science"
+                            placeholder="Electronics & Communication"
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
                         />
                     </div>
@@ -118,6 +147,7 @@ export const EducationForm = ({
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
                         />
                     </div>
+
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             Graduation Year
@@ -127,7 +157,58 @@ export const EducationForm = ({
                             name="graduation_year"
                             value={formData.graduation_year}
                             onChange={handleChange}
-                            placeholder="2020"
+                            placeholder="2025"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                        />
+                    </div>
+                </div>
+
+                {/* Grade Type + Grade */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Grade Type
+                        </label>
+                        <select
+                            name="grading_type"
+                            value={formData.grading_type}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white"
+                        >
+                            <option value="">Select</option>
+                            <option value="percentage">Percentage</option>
+                            <option value="cgpa">CGPA</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            {formData.grading_type === "cgpa"
+                                ? "CGPA"
+                                : formData.grading_type === "percentage"
+                                ? "Percentage"
+                                : "Grade"}
+                        </label>
+
+                        <input
+                            type="number"
+                            name="grade"
+                            value={formData.grade}
+                            onChange={handleChange}
+                            placeholder={
+                                formData.grading_type === "cgpa"
+                                    ? "8.5"
+                                    : formData.grading_type === "percentage"
+                                    ? "85.5"
+                                    : "e.g. 8.5 or 85.5"
+                            }
+                            step="0.01"
+                            min="0"
+                            max={
+                                formData.grading_type === "percentage"
+                                    ? "100"
+                                    : undefined
+                            }
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
                         />
                     </div>
@@ -160,24 +241,42 @@ export const EducationForm = ({
                             <h4 className="font-semibold text-gray-800">
                                 {edu.school}
                             </h4>
+
                             <p className="text-sm text-gray-600">
                                 {edu.degree}
                                 {edu.field_of_study
                                     ? `, ${edu.field_of_study}`
                                     : ""}
                             </p>
+
                             <p className="text-xs text-gray-500">
                                 {edu.graduation_year}
+                                {edu.grading_type &&
+                                    edu.grade !== null &&
+                                    edu.grade !== undefined && (
+                                        <>
+                                            {" • "}
+                                            {edu.grading_type === "percentage"
+                                                ? `${formatGrade(edu.grade)}%`
+                                                : `${formatGrade(
+                                                      edu.grade
+                                                  )} CGPA`}
+                                        </>
+                                    )}
                             </p>
                         </div>
+
                         <div className="flex gap-3">
                             <button
+                                type="button"
                                 onClick={() => handleEdit(edu)}
                                 className="text-blue-500 hover:text-blue-700 transition"
                             >
                                 <Edit size={18} />
                             </button>
+
                             <button
+                                type="button"
                                 onClick={() => onDelete(edu.id)}
                                 className="text-red-600 hover:text-red-800"
                             >
@@ -190,5 +289,20 @@ export const EducationForm = ({
         </div>
     );
 };
+
+function formatGrade(value) {
+    if (value === null || value === "" || value === undefined) return "";
+
+    // Convert to number first so JS trims .00 etc.
+    const num = Number(value);
+
+    // If integer, show as integer (75 instead of 75.0)
+    if (Number.isInteger(num)) {
+        return num.toString();
+    }
+
+    // Else show minimal decimal (8.5 instead of 8.50)
+    return num.toString();
+}
 
 export default EducationForm;
