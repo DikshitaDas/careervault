@@ -20,25 +20,30 @@ It combines a **React-powered frontend** with a **secure Laravel REST API**, pro
 
 ## ✨ Features
 
-- 🔐 **User Authentication & Profiles**  
+* 🔐 **User Authentication & Profiles**
   Secure login and personalized resume management.
 
-- 📝 **Resume Builder & Manager**  
+* 📝 **Resume Builder & Manager**
   Add Experience, Education, Projects, Skills, Certifications — all structured beautifully.
 
-- 🎨 **Modern & Responsive UI**  
-  Designed with **React + Tailwind CSS** for minimal, clean, and vibrant interactions.
+* 🎨 **Two Professional Resume Templates**
+  CareerVault includes **both Classic and Modern CV templates**, offering users a choice between a traditional professional layout and a clean, contemporary design.
+  Each template is optimized for ATS compatibility, readability, and clean spacing.
 
-- ⚙️ **Powerful Backend**  
+* 📄 **Live Preview System**
+  Users can switch between templates and instantly see updated resume content in a real-time preview pane.
+
+* ⚙️ **Powerful Backend**
   Laravel API with proper validation, routing, and scalable structure.
 
-- 🗄️ **Persistent Database Storage**  
+* 🗄️ **Persistent Database Storage**
   Store structured resume fields securely in **MySQL** using Eloquent ORM.
 
-- 📂 **Project Highlights & Achievements**  
+* 📂 **Project Highlights & Achievements**
   Showcase your best work clearly for recruiters.
 
 ---
+
 
 ## 🧱 Tech Stack
 
